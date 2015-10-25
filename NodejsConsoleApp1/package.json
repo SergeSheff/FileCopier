@@ -8,6 +8,7 @@
     "email": ""
   },
   "dependencies": {
-    "config": "^1.16.0"
+    "config": "^1.16.0",
+    "walk": "^2.3.9"
   }
 }

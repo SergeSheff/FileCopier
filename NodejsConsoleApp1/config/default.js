@@ -1,3 +1,0 @@
-﻿{ 
-	UbuntuPath : 'E:\test';
-}
