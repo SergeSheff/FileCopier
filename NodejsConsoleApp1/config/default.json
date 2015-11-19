@@ -1,4 +1,5 @@
-﻿{ 
-	"UbuntuPath" : "E:\\test",
-	"WindowsPath" : "E:\\test"
+﻿{
+  "DirectoryToWatch": "E:\\test",
+  "UbuntuPath": "E:\\test",
+  "WindowsPath": "E:\\test"
 }

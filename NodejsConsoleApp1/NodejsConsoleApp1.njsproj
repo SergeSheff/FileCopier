@@ -32,6 +32,8 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="class\Copier.js" />
+    <Compile Include="class\Redis.js" />
+    <Compile Include="class\Watcher.js" />
     <Compile Include="config\default.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />

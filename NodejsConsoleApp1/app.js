@@ -1,4 +1,15 @@
-﻿var isSyncWithWindows = false;
+﻿var config = require('config');
+var watcher = require('./class/Watcher.js')(config.DirectoryToWatch);
+
+
+
+
+
+
+
+/*
+
+var isSyncWithWindows = false;
 const TO_WINDOWS = 'ToWindows';
 
 
@@ -16,3 +27,4 @@ _copier.Copy();
 
 
 console.log('Hello world');
+ */
