@@ -1,11 +1,12 @@
 ﻿var Config = require('config');
 var Walk = require('walk');
+var mkdirp = require('mkdirp');
 
 const UBUNTU_PATH = "UbuntuPath";
 const WINDOWS_PATH = "WindowsPath";
 const LIST_OF_EXCLUDED_FOLDERS = ['node_modules'];
 
-module.exports = function Copier(isCopyFromWindows) {
+var Copier = function (isCopyFromWindows) {
 		
 	function _GetConfig(ConfigName) {
 		if (Config.has(ConfigName)) {
@@ -53,3 +54,65 @@ module.exports = function Copier(isCopyFromWindows) {
 
 }
 
+
+var _Add = function (Path, IsFile) { 
+
+    if (IsFile) {
+        var directory = Path.replace(/\/[^\/] + $/, '');
+        //create directory
+        _Add(directory, false);
+
+        //copy file
+
+
+    }
+    else {
+        mkdirp(Path, function (err) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                return true;
+            }
+        });
+    }
+}
+
+var _Delete = function (Path, IsFile){
+
+}
+
+var _Rename = function (Path, IsFile){
+
+}
+
+
+
+
+Copier.Copy = function(command) {
+    const REGEX_ADD = /^add/;
+    const REGEX_DELETE = /^unlink/;
+    const REGEX_CHANGE = /^change$/;
+    const REGEX_IS_DIRECTORY = /Dir\s~/;
+    const REGEX_CLEANUP = /^[^~]*~\s?/;
+     
+    
+    var IsFile = (command.match(REGEX_IS_DIRECTORY) ? false : true);
+    var path = command.replace(REGEX_CLEANUP, '');
+    
+    if (command.match(REGEX_ADD)) { 
+        _Add(path, IsFile);
+    }
+
+    else if (command.match(REGEX_DELETE)) {
+        //_dele(path, IsFile);
+    }
+    else if (command.match(REGEX_CHANGE)) { 
+    }
+
+
+
+}
+
+
+module.exports = Copier();

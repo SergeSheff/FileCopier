@@ -1,8 +1,8 @@
 ﻿var fs = require('fs');
 var chokidar = require('chokidar');
 
-module.exports = function (DirectoryToWatch) {
-    
+module.exports = function (DirectoryToWatch, redis) {
+
     fs.stat(DirectoryToWatch, function (err, data) {
         if (!err) {
             //directory exists
@@ -15,13 +15,6 @@ module.exports = function (DirectoryToWatch) {
        
         
     function StartWatching() {
-        
-        var _redis = require('./Redis.js');
-        
-        var tmp = new _redis();
-
-        _redis.Add('test');
-
         // Initialize watcher. 
         var watcher = chokidar.watch(DirectoryToWatch,{
             ignored: /[\/\\]\./,
@@ -29,14 +22,8 @@ module.exports = function (DirectoryToWatch) {
             ignoreInitial  : true
         });
 
-
-        watcher.on('all', function (path, stats) { 
-            _redis.Add(path);
+        watcher.on('all', function (path, stats) {
+            redis.Add(path, data);
         });
-        
     }
-
-
-
-
 }

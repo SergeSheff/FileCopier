@@ -1,5 +1,13 @@
 ﻿var config = require('config');
-var watcher = require('./class/Watcher.js')(config.DirectoryToWatch);
+
+//initialize redis
+var redis = require('./class/Redis.js');
+var newRedis = new redis();
+
+//start watching
+var watcher = require('./class/Watcher.js')(config.DirectoryToWatch, newRedis);
+
+//start queue
 
 
 
