@@ -5,11 +5,14 @@ module.exports = function () {
     const KEY_DIRECTORIES = "CopierDirectories"
     const SPLIT_CHAR = "~";
     
-    var client = redis.createClient();   
+    var client = redis.createClient();
+   
     client.on("error", function (err) {
         
-        console.log("Error " + err);
-    });        
+        console.log("Error " + err);
+
+    });
+        
     this.Add = function _Add(Action, Object) {
         
         var data = Object;
@@ -21,25 +24,42 @@ module.exports = function () {
         else {
             client.sadd(KEY_FILES, data);
         }
-    }        function Get(IsFiles) {
-        var key = (IsFiles ? KEY_FILES : KEY_DIRECTORIES);
+    }
+    
+    this.Get = function Get(IsDirectory, Next) {
+        var key = (IsDirectory ? KEY_DIRECTORIES : KEY_FILES);
         
         client.smembers(key, function (err, data) {
+            //console.log('Redis->Get: ' + data);
             
-            console.log(data);            
             if (data) {
-                return data;
+                //cleanup cache
+                client.del(KEY_FILES, function (err, data) {
+                    //console.log('deleted')
+                });
+
+                Next(IsDirectory, data);
             }
             else { 
                 throw err;
             }
         });
-    }        function CleanUp() {
-                client.exists(KEY_FILES, function (err, data) {
+    }
+    
+    this.Cleanup = function _Cleanup(IsDirectory) {
+        var key = (IsDirectory ? KEY_DIRECTORIES : KEY_FILES);
+
+        client.exists(key, function (err, data) {
             
             if (data === 1) {
-                //console.log('exists');                
+                //console.log('exists');
+                
                 client.del(KEY_FILES, function (err, data) {
-                    //console.log('deleted')                });            }        });    } }
+                    //console.log('deleted')
+                });
+            }
+        });
+    }
+ }
 
  

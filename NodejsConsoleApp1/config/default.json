@@ -1,5 +1,11 @@
 ﻿{
   "DirectoryToWatch": "E:\\test",
+  "DestinationDirectory": "",
+  "SyncPeriod" : 1000,
+
+
+
+
   "UbuntuPath": "E:\\test",
   "WindowsPath": "E:\\test"
 }

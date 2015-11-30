@@ -4,15 +4,13 @@
 var redis = require('./class/Redis.js');
 var newRedis = new redis();
 
+
 //start watching
 var watcher = require('./class/Watcher.js')(config.DirectoryToWatch, newRedis);
 
 //start queue
-
-
-
-
-
+var queue = require('./class/Queue.js')(newRedis, config.DirectoryToWatch, config.DestinationDirectory);
+setInterval(queue.StartProcessing, config.SyncPeriod);
 
 
 /*

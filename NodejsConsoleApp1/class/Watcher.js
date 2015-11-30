@@ -23,7 +23,7 @@ module.exports = function (DirectoryToWatch, redis) {
         });
 
         watcher.on('all', function (path, stats) {
-            redis.Add(path, data);
+            redis.Add(path, stats);
         });
     }
 }
